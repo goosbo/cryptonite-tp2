@@ -1,8 +1,10 @@
 # GDB baby step 1
 
-Well... I was not expecting to solve this module the way I did. So I downloaded the binary and I was going through the reverse engineering resources given. Since the title of the challenge had `GDB` in it I assumed that would be what I would need to use.
+I assumed I would need GDB for this(due to the title) but it turned out I did not.
 
-Now I disassembled the file using `objdump -d -Mintel debugger0_a` and pipe it into `less` as in the resources as I was messsing around.
+I downloaded the file just to look at it as I had not learnt how to use gdb yet and I was going through the videos provided.
+
+Now I disassembled the file using `objdump -d -Mintel debugger0_a` and pipe it into `less`(as done in one of the videos).
 
 On inspecting the output I see the main section,
 ```
