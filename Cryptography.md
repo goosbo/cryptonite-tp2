@@ -65,3 +65,58 @@ This gave me the output,
 picoCTF{custom_d2cr0pt6d_751a22dc}
 ```
 which was the right flag.
+
+# C3
+
+Since the code was looking up the index of each character in lookup1 and substituting it with the character at index retreived subtracted by the previous index in loopup2, I just had to reverse the process.
+
+This wasn't the case however, if the previous index is greater than the current index. But since the mod of n with a negative number `-x` is `n+x` that case is also covered.
+
+```python
+s= ''
+prev = 0
+for ch in chars:
+  cur = lookup2.index(ch)
+  if cur+prev < 40:
+    cur+=prev
+  else:
+    cur = prev-(40-cur)
+  prev = cur
+  s+= lookup1[cur]
+```
+
+This was my implementation for decryption where the index of the character in lookup2 is checked. If the sum of current and previous is more than or equal to 40, it can be assumed that the negative mod property given above is used. Therefore both cases are accounted for.
+
+The output to the decryption code was,
+```python
+#asciiorder
+#fortychars
+#selfinput
+#pythontwo
+
+chars = ""
+from fileinput import input
+for line in input():
+    chars += line
+b = 1 / 1
+
+for i in range(len(chars)):
+    if i == b * b * b:
+        print chars[i] #prints
+        b += 1 / 1
+```
+At first I enclosed `()` around `chars[]` since I did not know it was valid in python 2 and thought it was a mistake in the decryption algorithm.
+
+I thought selfinput and 40 symbolized using the values of lookup1 and lookup2 at first but that did not give me the flag.
+
+Eventually I figured out that, the file needs itself as input and that gave me the output:
+```
+a
+d
+l
+i
+b
+s
+```
+
+flag: `picoCTF{adlibs}`
