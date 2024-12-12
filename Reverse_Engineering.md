@@ -76,3 +76,93 @@ int main(){
 
 Output of the script: `jU5t_a_s1mpl3_an4gr4m_4_u_79958f`
 On adding the neccessary prefix and suffix, flag:`picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}`
+
+# ARMssembly 1
+
+Script Provided:
+```assembly
+	.arch armv8-a
+	.file	"chall_1.c"
+	.text
+	.align	2
+	.global	func
+	.type	func, %function
+func:
+	sub	sp, sp, #32
+	str	w0, [sp, 12]
+	mov	w0, 83
+	str	w0, [sp, 16]
+	str	wzr, [sp, 20]
+	mov	w0, 3
+	str	w0, [sp, 24]
+	ldr	w0, [sp, 20]
+	ldr	w1, [sp, 16]
+	lsl	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w1, [sp, 28]
+	ldr	w0, [sp, 24]
+	sdiv	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w1, [sp, 28]
+	ldr	w0, [sp, 12]
+	sub	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w0, [sp, 28]
+	add	sp, sp, 32
+	ret
+	.size	func, .-func
+	.section	.rodata
+	.align	3
+.LC0:
+	.string	"You win!"
+	.align	3
+.LC1:
+	.string	"You Lose :("
+	.text
+	.align	2
+	.global	main
+	.type	main, %function
+main:
+	stp	x29, x30, [sp, -48]!
+	add	x29, sp, 0
+	str	w0, [x29, 28]
+	str	x1, [x29, 16]
+	ldr	x0, [x29, 16]
+	add	x0, x0, 8
+	ldr	x0, [x0]
+	bl	atoi
+	str	w0, [x29, 44]
+	ldr	w0, [x29, 44]
+	bl	func
+	cmp	w0, 0
+	adrp	x0, .LC0
+	add	x0, x0, :lo12:.LC0
+	bl	puts
+	b	.L6
+.L4:
+	adrp	x0, .LC1
+	add	x0, x0, :lo12:.LC1
+	bl	puts
+.L6:
+	nop
+	ldp	x29, x30, [sp], 48
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) 7.5.0"
+	.section	.note.GNU-stack,"",@progbits
+```
+
+It is seen that the argument is stored in `w0` before it jumps to the function `func`.
+Space is created in the stack using `sub sp, sp, #32` and the argument is stored in the location `sp+12`.
+`83`,`0` and `3` are stored in `sp+16`,`sp+20` and `sp+24` respectively(with `w0` acting as a transfer register).
+
+Next, `0` is loaded in `w0` and `83` is loaded in `w1`. The result of the operation `w1<<w0` which is `83<<0` = `83` is stored in `w0` and then stored in memory location `sp+28`
+`83` is loaded from `sp+28` to `w1` and `3` is loaded from `sp+24` to `w0`, `w1/w0` is stored in `w0` which is `27`, it is stored in the memory location `sp+28`
+
+The argument is loaded from `sp+12` and stored in `w0` while `27` is loaded into `w1`. The result of `w1-w0` is stored in `w0` and the function returns
+
+We see that `cmp w0,0` after the function checks if `w0` is equal to 0. If this is true it prints "You win!", else it prints "You lose!".
+Therefore in the function the result of `w1-w0` should be zero, so the argument much be equal to `w1` -> argument must be `27`
+
+`27` in hex is `0x1b` which represented by 32 bits is `0x0000001b`
+Therefore, flag:`picoCTF{0000001b}`
