@@ -15,7 +15,7 @@ for i in chunks:
     yap += hex(rAnDoM.gEtRanDBitS(32))
     yap += hex(rAnDoM.gEtRanDBitS(32))
 ```
-On analysing the code it is seen that the flag is made into chunks of size 4 bytes each and for each chunk 6 random 32 bit numbers are appended with the seed set to the value of the chunk.
+On analysing the code it is seen that the flag is made into chunks of size 4 bytes each and for each chunk 6 random 32 bit numbers are appended to yap with the seed set to the value of the chunk.
 
 Analysis of `rAnDoM.sEeD()`:
 ```python
@@ -39,7 +39,7 @@ def gEtRanDBitS(cls, bits : int) -> int:
 ```
 Now this function generates the first 624 random numbers of a particular seed and picks the `0,1,2,227,228 and 229th` index every time its called incrementally. 
 
-Since the in the encoding program six random numbers are generated per seed, all the values at these indices in the first 624 random numbers are concatenated to `yap`. Every other function in the `rAnDoM.py` file is irrelevant to the challenge.
+In the encoding program six random numbers are generated per seed, all the values at these indices in the first 624 random numbers are concatenated to `yap`. Every other function in the `rAnDoM.py` file is irrelevant to the challenge.
 
 After researching a bit I found out that python's random module is deterministic and uses something called the Mersenne Twister. It generates a state with 624 32 bit number and random numbers are extracted from it sequentially(with some alteration) and after every 624 numbers the current state is 'twisted' to achieve the next state. 
 
