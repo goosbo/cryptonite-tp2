@@ -1,7 +1,7 @@
 # freakada 3301
 
 I opened the given image on notepad to find:
-![freakada image](https://imgur.com/a/wVxpXgF)
+![freakada image](images/cipher.png)
 
 `ZIT HQZI OL GWLEXKTR, WXZ ZIT ZKXZI SOTL OF ZIT LIQRGVL. LTTA ZIT HQZZTKFL. QDGFU ZIT EIQGL, Q WTQEGF QVQOZL: izzhl://woz.sn/yktqatlztof0. GFSN ZIT VGKZIN VOSS LTT ZIT XFLTTF. ZIT PGXKFTN IQL PXLZ WTUXF`
 
@@ -15,7 +15,7 @@ THE PATH IS OBSCURED, BUT THE TRUTH LIES IN THE SHADOWS. SEEK THE PATTERNS. AMON
 Since bit.ly links are case sensitive and I didn't know if the last character `0` was decoded correctly, I played around with it a bit until I got the right link: `https://bit.ly/freakestein0`
 
 This lead to a protondrive link with an image called `ducky.jpg`
-![ducky.png](https://imgur.com/a/s75i0iC))
+![ducky.png](images/duck.png)
 
 On running `binwalk -e ducky.jpg`, I find a `secret.txt` link with a github user link `https://github.com/freakada-3301`
 The user contained a repository `Salvation-in-Decay`. It had three files `Code of Decay`, `Whispers of the forgotten` and `README.md`. Both `Code of Decay` and `Whispers of the forgotten` had text in alien language which decoded to `SOMEHOW FORGOTTEN` and `WE WERE HERE` respectively which seemed to a dead end.
@@ -96,22 +96,22 @@ After joining the vc(and listening to thick of it for the rest of my time solvin
 It's bio contained the text `give me my prime, i'll give you my location`, I assumed it symbolized a prime number.
 
 After trying to think of what the prime number could be I noticed that 3301 was prime.
-![3301](https://imgur.com/a/6ot7gSz)
+![3301](images/3301.png)
 
 After analyzing the image, I noticed that it's dimensions `449 × 503` are also prime numbers. 
-![prime products](https://imgur.com/a/zGTfE2C)
+![prime products](images/coords.png)
 
 This gave me the coords, `13.34508015959565, 74.79629600750295`.
 
 Looking them up on Google Earth, led me to Freaky Backshots Cliff next to Food Court 2. There were recent images attached to the location that had a `freakada-3301` theme.
 
 A couple of those images had QR-codes on them(at first I thought all of them led to different links, but all of them were the same)
-![qr code](https://imgur.com/a/ERUO2L7)
+![qr code](images/qr.png)
 
 The qr code led to a proton drive link with a .wav file called `freakmessage.wav` which contained morse code.
 
 Decoding the morse code gave me the result:
-![morse result](https://imgur.com/a/DWwqbSm)
+![morse result](images/morse.png)
 
 Therefore, the first part of the flag was `nite{4_wannabe_`. I have to admit it took a very long time for me to realise that the output also contained morse code at the bottom so I was stuck for a while. 
 
