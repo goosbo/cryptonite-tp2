@@ -139,3 +139,5 @@ def undo_php_mt_reload(S000, S227):
 This function in the linked resource was similar to what I wanted to implement but gave me wrong outputs(which makes sense since this is php's implementatin on python). 
 
 Essentially, I was not able to implement the reversing of twisting to get the previous state and the fact that I was not able to understand the reason for python to have a different first state first value than the seed made me stuck.
+
+bonus: https://github.com/goosbo/mersenne_twister_rust, I had to make a Mersenne Twister implementation myself after all that time spent :).
