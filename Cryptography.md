@@ -157,3 +157,21 @@ Originally I was getting the wrong flag with this method before I looked at the 
 Running this code gave me the output: `picoCTF{n33d_a_lArg3r_e_ccaa7776|`. Excluding the wrong value of the last character(probably due to precision), I had obtained the flag.
 
 flag: `picoCTF{n33d_a_lArg3r_e_ccaa7776}`
+
+# waves over lambda 
+
+So the problem description states that they encrypted the text with a lot of substitutions. The text is
+```
+-------------------------------------------------------------------------------
+njrsxago zmxm po cjex ftas - fxmdemrnc_po_n_jlmx_taqbka_asftnsgcem
+-------------------------------------------------------------------------------
+bmgvmmr eo gzmxm vao, ao p zalm atxmakc oapk ojqmvzmxm, gzm bjrk jf gzm oma. bmopkmo zjtkprs jex zmaxgo gjsmgzmx gzxjesz tjrs umxpjko jf omuaxagpjr, pg zak gzm mffmng jf qayprs eo gjtmxarg jf manz jgzmx'o caxroark mlmr njrlpngpjro. gzm tavcmxgzm bmog jf jtk fmttjvozak, bmnaeom jf zpo qarc cmaxo ark qarc lpxgemo, gzm jrtc neozpjr jr kmny, ark vao tcprs jr gzm jrtc xes. gzm annjergarg zak bxjeszg jeg atxmakc a bjw jf kjqprjmo, ark vao gjcprs axnzpgmngexattc vpgz gzm bjrmo. qaxtjv oag nxjoo-tmssmk xpszg afg, tmarprs asaprog gzm qphhmr-qaog. zm zak oerymr nzmmyo, a cmttjv njqutmwpjr, a ogxapszg bany, ar aonmgpn aoumng, ark, vpgz zpo axqo kxjuumk, gzm uatqo jf zarko jegvaxko, xmomqbtmk ar pkjt. gzm kpxmngjx, oagpofpmk gzm arnzjx zak sjjk zjtk, qakm zpo vac afg ark oag kjvr aqjrsog eo. vm mwnzarsmk a fmv vjxko tahptc. afgmxvaxko gzmxm vao optmrnm jr bjaxk gzm canzg. fjx ojqm xmaojr jx jgzmx vm kpk rjg bmspr gzag saqm jf kjqprjmo. vm fmtg qmkpgagplm, ark fpg fjx rjgzprs beg utanpk ogaxprs. gzm kac vao mrkprs pr a omxmrpgc jf ogptt ark mwdepopgm bxpttparnm. gzm vagmx ozjrm uanpfpnattc; gzm oyc, vpgzjeg a oumny, vao a bmrpsr pqqmropgc jf erogaprmk tpszg; gzm lmxc qpog jr gzm moomw qaxoz vao tpym a saehc ark xakparg fabxpn, zers fxjq gzm vjjkmk xpomo prtark, ark kxauprs gzm tjv ozjxmo pr kpauzarjeo fjtko. jrtc gzm stjjq gj gzm vmog, bxjjkprs jlmx gzm euumx xmanzmo, bmnaqm qjxm ojqbxm mlmxc qpregm, ao pf arsmxmk bc gzm auuxjanz jf gzm oer.
+```
+
+I assumed it's a monoalphabetic substitution cipher and put the ciphertext in [dcode.fr's automatic monoalphabetic substitution cipher decoder](https://www.dcode.fr/monoalphabetic-substitution) and I got the following result:
+![dcode](images/dcode.png)
+```
+------------------------------------------------------------------------------- CONGRATS HERE IS YOUR FLAG - FREQUENCY_IS_C_OVER_LAMBDA_AGFLCGTYUE ------------------------------------------------------------------------------- BETWEEN US THERE WAS, AS I HAVE ALREADY SAID SOMEWHERE, THE BOND OF THE SEA. BESIDES HOLDING OUR HEARTS TOGETHER THROUGH LONG PERIODS OF SEPARATION, IT HAD THE EFFECT OF MAKING US TOLERANT OF EACH OTHER'S YARNSAND EVEN CONVICTIONS. THE LAWYERTHE BEST OF OLD FELLOWSHAD, BECAUSE OF HIS MANY YEARS AND MANY VIRTUES, THE ONLY CUSHION ON DECK, AND WAS LYING ON THE ONLY RUG. THE ACCOUNTANT HAD BROUGHT OUT ALREADY A BOX OF DOMINOES, AND WAS TOYING ARCHITECTURALLY WITH THE BONES. MARLOW SAT CROSS-LEGGED RIGHT AFT, LEANING AGAINST THE MIJJEN-MAST. HE HAD SUNKEN CHEEKS, A YELLOW COMPLEXION, A STRAIGHT BACK, AN ASCETIC ASPECT, AND, WITH HIS ARMS DROPPED, THE PALMS OF HANDS OUTWARDS, RESEMBLED AN IDOL. THE DIRECTOR, SATISFIED THE ANCHOR HAD GOOD HOLD, MADE HIS WAY AFT AND SAT DOWN AMONGST US. WE EXCHANGED A FEW WORDS LAJILY. AFTERWARDS THERE WAS SILENCE ON BOARD THE YACHT. FOR SOME REASON OR OTHER WE DID NOT BEGIN THAT GAME OF DOMINOES. WE FELT MEDITATIVE, AND FIT FOR NOTHING BUT PLACID STARING. THE DAY WAS ENDING IN A SERENITY OF STILL AND EXQUISITE BRILLIANCE. THE WATER SHONE PACIFICALLY; THE SKY, WITHOUT A SPECK, WAS A BENIGN IMMENSITY OF UNSTAINED LIGHT; THE VERY MIST ON THE ESSEX MARSH WAS LIKE A GAUJY AND RADIANT FABRIC, HUNG FROM THE WOODED RISES INLAND, AND DRAPING THE LOW SHORES IN DIAPHANOUS FOLDS. ONLY THE GLOOM TO THE WEST, BROODING OVER THE UPPER REACHES, BECAME MORE SOMBRE EVERY MINUTE, AS IF ANGERED BY THE APPROACH OF THE SUN.
+```
+
+flag: `FREQUENCY_IS_C_OVER_LAMBDA_AGFLCGTYUE`
