@@ -166,3 +166,53 @@ Therefore in the function the result of `w1-w0` should be zero, so the argument 
 
 `27` in hex is `0x1b` which represented by 32 bits is `0x0000001b`
 Therefore, flag:`picoCTF{0000001b}`
+
+# Picker I
+
+When I run the program I get the following:
+
+```python
+Try entering "getRandomNumber" without the double quotes...
+==> getRandomNumber 
+4
+```
+
+On further analysis of the source code it is seen that it evaluates the input string with `()` concatenated at the end and runs the respective function.
+This means that if we input a function name other than `getRandomNumber`, we would be able to run it.
+
+Now a specific function that caught my eye is the `win` function.
+
+```python
+def win():
+  # This line will not work locally unless you create your own 'flag.txt' in
+  #   the same directory as this script
+  flag = open('flag.txt', 'r').read()
+  #flag = flag[:-1]
+  flag = flag.strip()
+  str_flag = ''
+  for c in flag:
+    str_flag += str(hex(ord(c))) + ' '
+  print(str_flag)
+```
+
+It takes the flag and performs certain operations on it and prints the result. So if we call this function and reverse these operations we should be the flag.
+
+```
+Try entering "getRandomNumber" without the double quotes...
+==> win
+0x70 0x69 0x63 0x6f 0x43 0x54 0x46 0x7b 0x34 0x5f 0x64 0x31 0x34 0x6d 0x30 0x6e 0x64 0x5f 0x31 0x6e 0x5f 0x37 0x68 0x33 0x5f 0x72 0x30 0x75 0x67 0x68 0x5f 0x63 0x65 0x34 0x62 0x35 0x64 0x35 0x62 0x7d 
+```
+
+The `win` function basically takes each character in the flag and convert's its ascii value to hex and concatenates it to the output string.
+
+I wrote the following script to decrypt the output:
+```python
+e = '0x70 0x69 0x63 0x6f 0x43 0x54 0x46 0x7b 0x34 0x5f 0x64 0x31 0x34 0x6d 0x30 0x6e 0x64 0x5f 0x31 0x6e 0x5f 0x37 0x68 0x33 0x5f 0x72 0x30 0x75 0x67 0x68 0x5f 0x63 0x65 0x34 0x62 0x35 0x64 0x35 0x62 0x7d'
+
+f =  "".join([chr(int(x,16)) for x in e[2:].split(" 0x")])
+print(f)
+```
+
+It extracts each hex value and converts it to decimal and then converts it to the respective character according to ASCII.
+
+This gives the output flag: `picoCTF{4_d14m0nd_1n_7h3_r0ugh_ce4b5d5b}`
