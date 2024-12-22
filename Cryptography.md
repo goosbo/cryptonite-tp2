@@ -158,6 +158,7 @@ Running this code gave me the output: `picoCTF{n33d_a_lArg3r_e_ccaa7776|`. Exclu
 
 flag: `picoCTF{n33d_a_lArg3r_e_ccaa7776}`
 
+
 # waves over lambda 
 
 So the problem description states that they encrypted the text with a lot of substitutions. The text is
@@ -201,3 +202,35 @@ This gives the output:
 ![output](images/o.png)
 
 flag: `picoCTF{1b867c3e}`
+
+# College Rowing Team
+
+Analysing the encrypt.py tells us that the flag is mixed in with normal messages, 3 copies of each message is created and then they are shuffled.
+
+Each of these messages are encrypted using `RSA` and a random `n` is generated for each of them. An important observation is that the `e` used is `3`. Now just like a previous challenge this implies `m^e < n` if m is the message in bytes. 
+
+Since the ciphertext `c` is equal to `m^e %n`, this means `n` can be ignored and `c = m^3`. So we can decrypt each message by raising `c` to the power `1/3` and decoding the result.
+
+I implemented it with the following script,
+```python
+from decimal import *
+from Crypto.Util.number import *
+f = open('encrypted-messages.txt','r')
+
+for i in f:
+    if i[0] == 'c':
+        c = long_to_bytes(int(pow(Decimal(int(i[3:])),Decimal(1/3))))
+        if b'pico' in c:
+            getcontext().prec = 1000
+            e = long_to_bytes(int(pow(Decimal(int(i[3:])),1/Decimal(3)))).decode()
+            print(e)
+            break
+```
+
+Since only the `c` values from the encrypted text are needed(`n` can be ignored and `e` is a constant) the rest of the lines are ignored.
+
+I convert each ciphertext to the message using `c^(1/3)` and check if it contains `pico`. Now the reason I cannot directly get the flag is due to floating point precision. So if I confirm that value does indeed represent the flag, I increase the precision using `getcontext().prec = 1000`. Then I do the same decoding and print the flag.
+
+This gives me the output: `picoCTF{1_gu3ss_p30pl3_p4d_m3ss4g3s_f0r_4_r34s0n|`
+
+Replacing the last character with `}` gives the flag: `picoCTF{1_gu3ss_p30pl3_p4d_m3ss4g3s_f0r_4_r34s0n}`
