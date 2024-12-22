@@ -175,3 +175,29 @@ I assumed it's a monoalphabetic substitution cipher and put the ciphertext in [d
 ```
 
 flag: `FREQUENCY_IS_C_OVER_LAMBDA_AGFLCGTYUE`
+
+# Pixelated
+
+The wikipedia page of visual cryptography contains the following
+```
+They demonstrated a visual secret sharing scheme, where a binary image was broken up into n shares so that only someone with all n shares could decrypt the image, while any n − 1 shares revealed no information about the original image. Each share was printed on a separate transparency, and decryption was performed by overlaying the shares.
+```
+
+Since we are given 2 images, this implies that combining the color values at each pixel of the 2 images should give the decrypted image.
+
+I made a script using PIL to do so:
+
+```python
+from PIL import Image
+import numpy as np
+
+s1 = np.asarray(Image.open('scrambled1.png'))
+s2 = np.asarray(Image.open('scrambled2.png'))
+out = Image.fromarray(s1+s2)
+out.save('o.png',"PNG")
+```
+
+This gives the output:
+![output](images/o.png)
+
+flag: `picoCTF{1b867c3e}`
