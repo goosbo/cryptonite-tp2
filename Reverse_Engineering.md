@@ -216,3 +216,63 @@ print(f)
 It extracts each hex value and converts it to decimal and then converts it to the respective character according to ASCII.
 
 This gives the output flag: `picoCTF{4_d14m0nd_1n_7h3_r0ugh_ce4b5d5b}`
+
+# Vault Door 7
+
+Just like the previous vault door challenge I did, the java file takes the flag, removes preceeding `picoCTF{` and ending `}` and compares it with certain conditions.
+
+Since we know the specific conditions the flag must match, we can reverse engineer the values to get the right flag.
+
+Now there are 2 functions we have to analyze.
+
+```java
+	public int[] passwordToIntArray(String hex) {
+        int[] x = new int[8];
+        byte[] hexBytes = hex.getBytes();
+        for (int i=0; i<8; i++) {
+            x[i] = hexBytes[i*4]   << 24
+                 | hexBytes[i*4+1] << 16
+                 | hexBytes[i*4+2] << 8
+                 | hexBytes[i*4+3];
+        }
+        return x;
+    }
+
+    public boolean checkPassword(String password) {
+        if (password.length() != 32) {
+            return false;
+        }
+        int[] x = passwordToIntArray(password);
+        return x[0] == 1096770097
+            && x[1] == 1952395366
+            && x[2] == 1600270708
+            && x[3] == 1601398833
+            && x[4] == 1716808014
+            && x[5] == 1734291511
+            && x[6] == 960049251
+            && x[7] == 1681089078;
+    }
+```
+
+The password is first sent to `checkPassword` and is then passed to `passwordToIntArray` which returns an array of 8 elements.
+
+Now `passwordToIntArray` basically gets the byte representation of each character groups 4 bytes to get a 32 bit integer using bitshift operators
+
+In each of these 8 integers, the first byte represents the leftmost character and the last byte represents the rightmost character.
+
+After these integers are calculated, they are compared with the test 32bit integer values. Therefore getting the flag is simply converting these given test integer values to their character representations.
+
+I did it with the following script,
+```python
+from Crypto.Util.number import *
+
+e = [1096770097,1952395366,1600270708,1601398833,1716808014,1734291511,960049251,1681089078]
+f = "".join([long_to_bytes(x).decode() for x in e])
+f = "picoCTF{"+f+"}"
+print(f)
+```
+I stored each of the given integers in e and decoded it to individual byte values using the `Crypto` modules `long_to_bytes` function. I then decoded these byte values to ascii using `decode`.
+
+Concatenating these characters and adding `picoCTF{` and `}` at their respective positions gives the flag.
+
+flag: `picoCTF{A_b1t_0f_b1t_sh1fTiNg_07990cd3b6}`
